@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+<title>Dev_hj</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-light.min.css">
+
+<link rel="stylesheet" href="/css/style.css">
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+
+
+</head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                <img src="/images/logo.png" alt height="28">
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item " href="/archives">归档</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="Search" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            
+            <a class="navbar-item" title="Download" href="https://github.com/HJMengx/">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/2019/05/30/遗传算法/" itemprop="url">遗传算法</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2019-05-30T15:27:50.957Z" itemprop="datePublished">May 30 2019</time>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            7 minutes read (About 1052 words)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <h3 id="遗传算法"><a href="#遗传算法" class="headerlink" title="遗传算法"></a>遗传算法</h3><p>1、遗传算法理论的由来</p>
+<p>2、生物学的启发</p>
+<p>3、遗传算法定义</p>
+<p>4、遗传算法具体步骤</p>
+<pre><code>* 初始化
+* 适应度函数
+* 选择
+* 交叉
+* 变异</code></pre><p>5、遗传算法的应用</p>
+<pre><code>* 特征选取</code></pre><h4 id="类比"><a href="#类比" class="headerlink" title="类比"></a>类比</h4><p>我们先假设一个情景，现在你是一国之王，为了让你的国家免于灾祸，你实施了一套法案：</p>
+<pre><code>1. 你选出所有的好人，要求其通过生育来扩大国民数量。
+2. 这个过程持续进行了几代。
+3. 你将发现，你已经有了一整群的好人。</code></pre><p>这个例子虽然不太可能，但是我用它是想帮助你理解概念。也就是说，我们改变了输入值（比如：人口），就可以获得更好的输出值（比如：更好的国家）。现在，我假定你已经对这个概念有了大致理解，认为遗传算法的含义应该和生物学有关系。那么我们就快速地看一些小概念，这样便可以将其联系起来理解。</p>
+<h4 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h4><p>回到前面讨论的那个例子，并总结一下我们做过的事情。</p>
+<ol>
+<li>首先，我们设定好了国民的初始人群大小。</li>
+<li>然后，我们定义了一个函数，用它来区分好人和坏人。</li>
+<li>再次，我们选择出好人，并让他们繁殖自己的后代。</li>
+<li>最后，这些后代们从原来的国民中替代了部分坏人，并不断重复这一过程。</li>
+</ol>
+<p>遗传算法实际上就是这样工作的，也就是说，它基本上尽力地在某种程度上模拟进化的过程。</p>
+<p>因此，为了形式化定义一个遗传算法，我们可以将它看作一个优化方法，它可以尝试找出某些输入，凭借这些输入我们便可以得到最佳的输出值或者是结果。遗传算法的工作方式也源自于生物学，具体流程见下图：</p>
+<p><img src="https://ws1.sinaimg.cn/large/006tNbRwly1fx8td8y179j309j0dmmxl.jpg" alt></p>
+<p>算法的思想是非常简单的, 但是作用却是非常大的.</p>
+<h2 id="从一个实际问题来求解"><a href="#从一个实际问题来求解" class="headerlink" title="从一个实际问题来求解."></a>从一个实际问题来求解.</h2><h3 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h3><table>
+<thead>
+<tr>
+<th align="center">名字\属性</th>
+<th align="center">重量/kg</th>
+<th align="center">价值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">睡袋</td>
+<td align="center">15</td>
+<td align="center">15</td>
+</tr>
+<tr>
+<td align="center">绳子</td>
+<td align="center">3</td>
+<td align="center">7</td>
+</tr>
+<tr>
+<td align="center">折叠刀</td>
+<td align="center">2</td>
+<td align="center">10</td>
+</tr>
+<tr>
+<td align="center">火把</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr>
+<td align="center">瓶子</td>
+<td align="center">9</td>
+<td align="center">8</td>
+</tr>
+<tr>
+<td align="center">葡萄糖</td>
+<td align="center">20</td>
+<td align="center">17</td>
+</tr>
+</tbody></table>
+<p>有一个可以装30kg的背包, 怎么装效益最高.</p>
+<h2 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line"># 背包问题求解(动态规划也是求解这种问题的一个好方法)</span><br><span class="line"></span><br><span class="line">max_weights = 30</span><br><span class="line"></span><br><span class="line">weights = np.array([15, 3, 2, 5, 9, 20])</span><br><span class="line"></span><br><span class="line">values = np.array([15, 7, 10, 5, 8, 17])</span><br><span class="line"></span><br><span class="line">## 随机初始化一个族群</span><br><span class="line">features = len(weights)</span><br><span class="line"># 初始样本数</span><br><span class="line">init_sample_nums = np.random.randint(int(2 ** features / 3), 2 ** features)</span><br><span class="line">samples = np.ones((init_sample_nums, features))</span><br><span class="line"># 随机给定特性(基因)</span><br><span class="line">for sample in range(init_sample_nums):</span><br><span class="line">    probs = np.random.normal(0, 1, features) &gt; 0.5</span><br><span class="line">    random_sample = np.zeros((features, ))</span><br><span class="line">    random_sample[probs] = 1</span><br><span class="line">    samples[sample] = random_sample</span><br><span class="line"></span><br><span class="line"># 定义函数去筛选</span><br><span class="line">## 筛选, 去除超过总重量的</span><br><span class="line">def remove_the_not_fitness_sample(samples):</span><br><span class="line">    total_weights = np.sum(samples, axis=1)</span><br><span class="line">    not_fitness = total_weights &gt; 30</span><br><span class="line">    # 保留下来的</span><br><span class="line">    fitness = samples[~not_fitness]</span><br><span class="line">    return fitness</span><br><span class="line"></span><br><span class="line"># 评分函数</span><br><span class="line">###  用于族内对比 </span><br><span class="line">def compare_score(samples, remove=2):</span><br><span class="line">    # 如果直接通过最高评分判断</span><br><span class="line">    scores = np.zeros((len(samples, )))</span><br><span class="line">    for sample_index in range(len(samples)):</span><br><span class="line">        has_feature_index = samples[sample_index] == 1</span><br><span class="line">        scores[sample_index] = np.sum(weights[has_feature_index])</span><br><span class="line">    # 排分</span><br><span class="line">    # 从小到大</span><br><span class="line">    sort_scores = np.argsort(scores)</span><br><span class="line">    # 默认剔除最小的两个</span><br><span class="line">    return samples[sort_scores[2:]]</span><br><span class="line">    </span><br><span class="line">## 杂交</span><br><span class="line">def crossover(samples, pairs=5, feature_prob=0.5):</span><br><span class="line">    # 随机选取样本开始杂交</span><br><span class="line">    # 每一次随机选择5对开始杂交</span><br><span class="line">    features = len(samples[0])</span><br><span class="line">    copy_samples = np.copy(samples)</span><br><span class="line">    for pair_index in range(pairs):</span><br><span class="line">        selected = np.random.choice(range(len(samples)), 2)</span><br><span class="line">        # 每一个位置的Gene有多大的可能性会进行杂交</span><br><span class="line">        cross_indexes = np.random.normal(0, 1, features) &gt; feature_prob</span><br><span class="line">        print(cross_indexes, selected)</span><br><span class="line">        for cross_index in range(len(cross_indexes)):</span><br><span class="line">            if cross_indexes[cross_index]:</span><br><span class="line">                samples[selected[0]][cross_index] = samples[selected[1]][cross_index]</span><br><span class="line">        copy_samples = np.append(copy_samples, samples[selected], axis=0)</span><br><span class="line">    return copy_samples</span><br><span class="line"></span><br><span class="line">## 变异</span><br><span class="line">def mutation(samples, feature_unmutation_prob=0.8):</span><br><span class="line">    # 每个基因(feature)的变异几率为0.2</span><br><span class="line">    for sample in samples:</span><br><span class="line">        for feature in range(len(sample)):</span><br><span class="line">            if np.random.normal(0, 1, 1) &gt; feature_unmutation_prob:</span><br><span class="line">                sample[feature] = 0 if sample[feature] else 1</span><br><span class="line">    return samples</span><br><span class="line"></span><br><span class="line"># 执行生物论</span><br><span class="line">fitness = remove_the_not_fitness_sample(samples)</span><br><span class="line">filter_samples = compare_score(samples)</span><br><span class="line">crossover_samples = crossover(filter_samples)</span><br><span class="line">mutation_samples = mutation(crossover_samples)</span><br></pre></td></tr></table></figure>
+
+
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/2019/05/30/hello-world/" itemprop="url">Hello World</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2019-05-30T15:08:02.187Z" itemprop="datePublished">May 30 2019</time>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            a minute read (About 121 words)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+    
+    
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2019 HJMengx&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("default");
+</script>
+
+
+
+<script src="/js/script.js"></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something...">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js"></script>
+    
+</body>
+</html>
