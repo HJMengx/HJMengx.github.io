@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+<title>Flutter-完成一个图片APP - Dev_hj</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-light.min.css">
+
+<link rel="stylesheet" href="/css/style.css">
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+
+
+</head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                <img src="/images/logo.png" alt height="28">
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item " href="/archives">归档</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="Search" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            
+            <a class="navbar-item" title="Download" href="https://github.com/HJMengx/">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            Flutter-完成一个图片APP
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2019-06-21T12:47:36.271Z" itemprop="datePublished">Jun 21 2019</time>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            12 minutes read (About 1782 words)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <p>自从 <code>Flutter</code> 推出之后, 一直是备受关注, 有看好的也有不看好的, 作为移动开发人员自然是要尝试一下的(但是它的嵌套写法真的难受), 本着学一个东西, 就一定要动手的态度, 平时又喜欢看一些猫狗的图片, 就想着做一个加载猫狗图片你的 APP, 界面图如下(界面不是很好看).</p>
+<p><img src="http://ww4.sinaimg.cn/large/006tNc79gy1g44jzny6jvj30u01szkjs.jpg" alt></p>
+<p><img src="http://ww4.sinaimg.cn/large/006tNc79gy1g44k0aw8qmj30u01szu13.jpg" alt></p>
+<p><img src="http://ww2.sinaimg.cn/large/006tNc79gy1g44k0pm323j30u01szx6u.jpg" alt></p>
+<p><img src="http://ww4.sinaimg.cn/large/006tNc79gy1g44k0uqo5oj30u01sznpd.jpg" alt></p>
+<h4 id="主要模块"><a href="#主要模块" class="headerlink" title="主要模块"></a>主要模块</h4><p><img src="http://ww4.sinaimg.cn/large/006tNc79ly1g454p3y9ozj31j90u0q8a.jpg" alt></p>
+<h5 id="NetWork"><a href="#NetWork" class="headerlink" title="NetWork"></a>NetWork</h5><p><code>api.dart</code>文件中, 分别定义了<code>DogApi, CatApi</code>两个类, 一个用于处理获取猫的图片的类, 一个用于处理狗的图片的类.</p>
+<p><code>http_request.dart</code>文件封装了<code>Http</code>请求, 用于发送和接收数据.</p>
+<p><code>url.dart</code>文件封装了需要用到的<code>Api</code>接口, 主要是为了方便和统一管理而编写.</p>
+<p><code>Models</code>文件夹下分别定义不同<code>API</code>接口返回数据的模型. </p>
+<h5 id="图片页"><a href="#图片页" class="headerlink" title="图片页"></a>图片页</h5><p>瀑布流使用的<code>flutter_staggered_grid_view</code>库, 作者自定义了<code>Delegate</code>计算布局, 使用起来非常简单.</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">Widget scene = <span class="keyword">new</span> StaggeredGridView.countBuilder(</span><br><span class="line">      physics: BouncingScrollPhysics(),</span><br><span class="line">      itemCount: <span class="keyword">this</span>.breedImgs != <span class="keyword">null</span> ? <span class="keyword">this</span>.breedImgs.urls.length : <span class="number">0</span>,</span><br><span class="line">      mainAxisSpacing: <span class="number">4.0</span>,</span><br><span class="line">      crossAxisSpacing: <span class="number">4.0</span>,</span><br><span class="line">      crossAxisCount: <span class="number">3</span>,</span><br><span class="line">      itemBuilder: (context, index) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> GestureDetector(</span><br><span class="line">          onTapUp: (TapUpDetails detail) &#123;</span><br><span class="line">            <span class="comment">// 展示该品种的相关信息</span></span><br><span class="line">            <span class="keyword">dynamic</span> breed = <span class="keyword">this</span>.breeds[<span class="keyword">this</span>.selectedIdx].description;</span><br><span class="line">            <span class="comment">// <span class="doctag">TODO:</span> 取出当前点击的然后所有往后的</span></span><br><span class="line">            <span class="built_in">List</span>&lt;<span class="built_in">String</span>&gt; unreadImgs = <span class="keyword">new</span> <span class="built_in">List</span>&lt;<span class="built_in">String</span>&gt;();</span><br><span class="line">            <span class="keyword">for</span> (<span class="built_in">int</span> i = index; i &lt; <span class="keyword">this</span>.breedImgs.urls.length; i++) &#123;</span><br><span class="line">              unreadImgs.add(<span class="keyword">this</span>.breedImgs.urls[i]);</span><br><span class="line">            &#125;</span><br><span class="line">            AnimalImagesPage photoPage = <span class="keyword">new</span> AnimalImagesPage(</span><br><span class="line">              listImages: unreadImgs,</span><br><span class="line">              breed: <span class="keyword">this</span>.breeds[<span class="keyword">this</span>.selectedIdx].name,</span><br><span class="line">              imgType: <span class="string">"Cat"</span>,</span><br><span class="line">              petInfo: <span class="keyword">this</span>.breeds[<span class="keyword">this</span>.selectedIdx],</span><br><span class="line">            );</span><br><span class="line">            Navigator.of(context)</span><br><span class="line">                .push(<span class="keyword">new</span> MaterialPageRoute(builder: (context) &#123;</span><br><span class="line">              <span class="keyword">return</span> photoPage;</span><br><span class="line">            &#125;));</span><br><span class="line">          &#125;,</span><br><span class="line">          child: <span class="keyword">new</span> Container(</span><br><span class="line">            width: <span class="number">100</span>,</span><br><span class="line">            height: <span class="number">100</span>,</span><br><span class="line">            color: Color(<span class="number">0xFF2FC77D</span>), <span class="comment">//Colors.blueAccent,</span></span><br><span class="line">            child: <span class="keyword">new</span> CachedNetworkImage(</span><br><span class="line">              imageUrl: <span class="keyword">this</span>.breedImgs.urls[index],</span><br><span class="line">              fit: BoxFit.fill,</span><br><span class="line">              placeholder: (context, index) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">new</span> Center(child: <span class="keyword">new</span> CupertinoActivityIndicator());</span><br><span class="line">              &#125;,</span><br><span class="line">            ),</span><br><span class="line">          ),</span><br><span class="line">        );</span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="comment">// 该属性可以控制当前 Cell 占用的空间大小, 用来实现瀑布的感觉</span></span><br><span class="line">      staggeredTileBuilder: (<span class="built_in">int</span> index) =&gt;</span><br><span class="line">          <span class="keyword">new</span> StaggeredTile.count(<span class="number">1</span>, index.isEven ? <span class="number">1.5</span> : <span class="number">1</span>),</span><br><span class="line">    );</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>组装<code>PickerView</code></li>
+</ul>
+<p>系统默认的 <code>PickerView</code> 在每一次切换都会回调, 而且没有确定和取消事件,<br>如果直接使用会造成频繁的网络请求, 内存消耗也太快, 所以组装了一下, 增加确定和取消才去执行网络请求, 这样就解决了这个问题.</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line">Widget column = Column(</span><br><span class="line">  mainAxisSize: MainAxisSize.min,</span><br><span class="line">  children: &lt;Widget&gt;[</span><br><span class="line">    <span class="keyword">new</span> Row(</span><br><span class="line">      mainAxisSize: MainAxisSize.min,</span><br><span class="line">      children: &lt;Widget&gt;[</span><br><span class="line">        <span class="keyword">new</span> Container(</span><br><span class="line">          width: MediaQuery.of(context).size.width,</span><br><span class="line">          height: <span class="number">40</span>,</span><br><span class="line">          child: <span class="keyword">new</span> Row(</span><br><span class="line">            mainAxisAlignment: MainAxisAlignment.spaceBetween,</span><br><span class="line">            children: &lt;Widget&gt;[</span><br><span class="line">              <span class="keyword">new</span> Padding(</span><br><span class="line">                padding: EdgeInsets.only(left: <span class="number">10.0</span>),</span><br><span class="line">                child: <span class="keyword">new</span> GestureDetector(</span><br><span class="line">                  onTapUp: (detail) &#123;</span><br><span class="line">                    <span class="comment">// 点击了确定按钮, 退出当前页面</span></span><br><span class="line">                    Navigator.of(context).pop();</span><br><span class="line">                    <span class="comment">// 回调操作</span></span><br><span class="line">                    <span class="keyword">this</span>.submit(<span class="keyword">this</span>.selectedIndex);</span><br><span class="line">                  &#125;,</span><br><span class="line">                  child: <span class="keyword">new</span> Text(</span><br><span class="line">                    <span class="string">"确定"</span>,</span><br><span class="line">                    style: TextStyle(</span><br><span class="line">                        decoration: TextDecoration.none,</span><br><span class="line">                        color: Colors.white,</span><br><span class="line">                        fontSize: <span class="number">18</span>),</span><br><span class="line">                  ),</span><br><span class="line">                ),</span><br><span class="line">              ),</span><br><span class="line">              <span class="keyword">new</span> Padding(</span><br><span class="line">                padding: EdgeInsets.only(right: <span class="number">10.0</span>),</span><br><span class="line">                child: <span class="keyword">new</span> GestureDetector(</span><br><span class="line">                  onTapUp: (detail) &#123;</span><br><span class="line">                    <span class="comment">// 点击了确定按钮, 退出当前页面</span></span><br><span class="line">                    Navigator.of(context).pop();</span><br><span class="line">                  &#125;,</span><br><span class="line">                  child: <span class="keyword">new</span> Text(</span><br><span class="line">                    <span class="string">"取消"</span>,</span><br><span class="line">                    style: TextStyle(</span><br><span class="line">                        decoration: TextDecoration.none,</span><br><span class="line">                        color: Colors.white,</span><br><span class="line">                        fontSize: <span class="number">18</span>),</span><br><span class="line">                  ),</span><br><span class="line">                ),</span><br><span class="line">              )</span><br><span class="line">            ],</span><br><span class="line">          ),</span><br><span class="line">        ),</span><br><span class="line">      ],</span><br><span class="line">    ),</span><br><span class="line">    <span class="keyword">new</span> Container(</span><br><span class="line">      height: <span class="number">1</span>,</span><br><span class="line">      color: Colors.white,</span><br><span class="line">    ),</span><br><span class="line">    <span class="comment">// Picker</span></span><br><span class="line">    <span class="keyword">new</span> Expanded(</span><br><span class="line">      child: <span class="keyword">new</span> CupertinoPicker.builder(</span><br><span class="line">          backgroundColor: Colors.transparent,</span><br><span class="line">          itemExtent: <span class="number">44</span>,</span><br><span class="line">          childCount: <span class="keyword">this</span>.names.length,</span><br><span class="line">          onSelectedItemChanged: (<span class="built_in">int</span> selected) &#123;</span><br><span class="line">            <span class="keyword">this</span>.selectedIndex = selected;</span><br><span class="line">            <span class="keyword">this</span>.onSelected(selected);</span><br><span class="line">          &#125;,</span><br><span class="line">          itemBuilder: (context, index) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> Container(</span><br><span class="line">              width: <span class="number">160</span>,</span><br><span class="line">              height: <span class="number">44</span>,</span><br><span class="line">              alignment: Alignment.center,</span><br><span class="line">              child: <span class="keyword">new</span> Text(</span><br><span class="line">                <span class="keyword">this</span>.names[index],</span><br><span class="line">                textAlign: TextAlign.right,</span><br><span class="line">                style: <span class="keyword">new</span> TextStyle(</span><br><span class="line">                    color: Colors.white,</span><br><span class="line">                    fontSize: <span class="number">16</span>,</span><br><span class="line">                    decoration: TextDecoration.none),</span><br><span class="line">              ),</span><br><span class="line">            );</span><br><span class="line">          &#125;),</span><br><span class="line">    )</span><br><span class="line">  ],</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<h5 id="详情页"><a href="#详情页" class="headerlink" title="详情页"></a>详情页</h5><ul>
+<li><code>Column</code> 包含 <code>ListView</code></li>
+</ul>
+<p>详情页中, 上方是一个图片, 下方是关于品种的相关信息, <code>猫</code>下方是通过 <code>API</code>获取到的属性进行一个展示, 需要注意一点是, 如果<code>Column</code>封装了<code>MainAxis</code>相同方向的滚动控件, 必须设置<code>Width/Height</code>, 同理, <code>Row</code>也是需要注意这一点的.</p>
+<p>我在这里的做法是通过一个<code>Container</code>包裹 <code>ListView</code>.</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> Container(</span><br><span class="line">    margin: EdgeInsets.only(bottom: <span class="number">10</span>, top: <span class="number">10</span>),</span><br><span class="line">    height: MediaQuery.of(context).size.height - MediaQuery.of(context).size.width / <span class="number">1.2</span> - <span class="number">80</span>,</span><br><span class="line">     width: MediaQuery.of(context).size.width,</span><br><span class="line">     child: listView,</span><br><span class="line">),</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>图片动画</li>
+</ul>
+<p>这一部分稍微复杂一些, 首先需要监听滑动的距离, 来对图片进行变换, 最后根据是否达到阈值来进行切换动画, 这里我没有实现在最后一张和第一张图片进行切换以至于可以无限循环滚动, 我在边界阈值上只是阻止了下一步动画.</p>
+<p>动画我都是通过<code>Matrix4</code>来设置不同位置的属性, 它也能模拟出 <code>3D</code> 效果, </p>
+<p>动画的变换都是<code>Tween</code>来管理.</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> _initAnimation() &#123;</span><br><span class="line">  <span class="comment">// 透明度动画</span></span><br><span class="line">  <span class="keyword">this</span>.opacityAnimation = <span class="keyword">new</span> Tween(begin: <span class="number">1.0</span>, end: <span class="number">0.0</span>).animate(</span><br><span class="line">      <span class="keyword">new</span> CurvedAnimation(</span><br><span class="line">          parent: <span class="keyword">this</span>._nextAnimationController, curve: Curves.decelerate))</span><br><span class="line">    ..addListener(() &#123;</span><br><span class="line">      <span class="keyword">this</span>.setState(() &#123;</span><br><span class="line">        <span class="comment">// 通知 Fluter Engine 重绘</span></span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">  <span class="comment">// 翻转动画</span></span><br><span class="line">  <span class="comment">// 第三个值是角度</span></span><br><span class="line">  <span class="keyword">var</span> startTrans = Matrix4.identity()..setEntry(<span class="number">3</span>, <span class="number">2</span>, <span class="number">0.006</span>);</span><br><span class="line">  <span class="keyword">var</span> endTrans = Matrix4.identity()</span><br><span class="line">    ..setEntry(<span class="number">3</span>, <span class="number">2</span>, <span class="number">0.006</span>)</span><br><span class="line">    ..rotateX(<span class="number">3.1415927</span>);</span><br><span class="line">  <span class="keyword">this</span>.transformAnimation = <span class="keyword">new</span> Tween(begin: startTrans, end: endTrans)</span><br><span class="line">      .animate(<span class="keyword">new</span> CurvedAnimation(</span><br><span class="line">          parent: <span class="keyword">this</span>._nextAnimationController, curve: Curves.easeIn))</span><br><span class="line">        ..addListener(() &#123;</span><br><span class="line">          <span class="keyword">this</span>.setState(() &#123;&#125;);</span><br><span class="line">        &#125;);</span><br><span class="line">  <span class="comment">// 缩放</span></span><br><span class="line">  <span class="keyword">var</span> saveStartTrans = Matrix4.identity()..setEntry(<span class="number">3</span>, <span class="number">2</span>, <span class="number">0.006</span>);</span><br><span class="line">  <span class="comment">// 平移且缩放</span></span><br><span class="line">  <span class="keyword">var</span> saveEndTrans = Matrix4.identity()</span><br><span class="line">    ..setEntry(<span class="number">3</span>, <span class="number">2</span>, <span class="number">0.006</span>)</span><br><span class="line">    ..scale(<span class="number">0.1</span>, <span class="number">0.1</span>)</span><br><span class="line">    ..translate(<span class="number">-20.0</span>, <span class="number">20.0</span>); <span class="comment">// MediaQuery.of(context).size.height</span></span><br><span class="line">  <span class="keyword">this</span>.saveToPhotos = <span class="keyword">new</span> Tween(begin: saveStartTrans, end: saveEndTrans)</span><br><span class="line">      .animate(<span class="keyword">new</span> CurvedAnimation(</span><br><span class="line">          parent: <span class="keyword">this</span>._saveAnimationController, curve: Curves.easeIn))</span><br><span class="line">        ..addListener(() &#123;</span><br><span class="line">          <span class="keyword">this</span>.setState(() &#123;&#125;);</span><br><span class="line">        &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>Widget</code>引用这个属性来执行动画.</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">Widget pet = <span class="keyword">new</span> GestureDetector(</span><br><span class="line">      onVerticalDragUpdate: nextUpdate,</span><br><span class="line">      onVerticalDragStart: nextStart,</span><br><span class="line">      onVerticalDragEnd: next,</span><br><span class="line">      child: <span class="keyword">new</span> Transform(</span><br><span class="line">        transform: <span class="keyword">this</span>.dragUpdateTransform,</span><br><span class="line">        child: Container(</span><br><span class="line">          child: <span class="keyword">new</span> Transform(</span><br><span class="line">            alignment: Alignment.bottomLeft,</span><br><span class="line">            transform: transform,</span><br><span class="line">            child: <span class="keyword">new</span> Opacity(</span><br><span class="line">              opacity: opacity,</span><br><span class="line">              child: Container(</span><br><span class="line">                width: MediaQuery.of(context).size.width / <span class="number">1.2</span>,</span><br><span class="line">                height: MediaQuery.of(context).size.width / <span class="number">1.5</span> - <span class="number">30</span>,</span><br><span class="line">                child: <span class="keyword">new</span> Padding(</span><br><span class="line">                  padding: EdgeInsets.all(<span class="number">0</span>),</span><br><span class="line">                  child: <span class="keyword">new</span> CachedNetworkImage(</span><br><span class="line">                    imageUrl: <span class="keyword">this</span>.widget.listImages[item],</span><br><span class="line">                    fit: BoxFit.fill,</span><br><span class="line">                    placeholder: (context, content) &#123;</span><br><span class="line">                      <span class="keyword">return</span> <span class="keyword">new</span> Container(</span><br><span class="line">                        width: MediaQuery.of(context).size.width / <span class="number">2.0</span> - <span class="number">40</span>,</span><br><span class="line">                        height: MediaQuery.of(context).size.width / <span class="number">2.0</span> - <span class="number">60</span>,</span><br><span class="line">                        color: Color(<span class="number">0xFF2FC77D</span>),</span><br><span class="line">                        child: <span class="keyword">new</span> Center(</span><br><span class="line">                          child: <span class="keyword">new</span> CupertinoActivityIndicator(),</span><br><span class="line">                        ),</span><br><span class="line">                      );</span><br><span class="line">                    &#125;,</span><br><span class="line">                  ),</span><br><span class="line">                ),</span><br><span class="line">              ),</span><br><span class="line">            ),</span><br><span class="line">          ),</span><br><span class="line">        ),</span><br><span class="line">      ),</span><br><span class="line">    );</span><br></pre></td></tr></table></figure>
+
+<h6 id="Firebase-admob"><a href="#Firebase-admob" class="headerlink" title="Firebase_admob"></a>Firebase_admob</h6><p><strong>注意: 这里需要去 firebase 官网注册 APP, 然后分别下载 iOS, Android 的配置文件放到指定的位置, 否则程序启动的时候会闪退.</strong></p>
+<p><strong>iOS info.plist: GADApplicationIdentifier也需要配置, 虽然在 Dart 中会启动的时候就注册ID, 但是这里也别忘了配置.</strong></p>
+<p><strong>Android Manifst.xml 也需要配置</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta-data</span></span></span><br><span class="line"><span class="tag"> <span class="attr">android:name</span>=<span class="string">"com.google.android.gms.ads.APPLICATION_ID"</span></span></span><br><span class="line"><span class="tag"> <span class="attr">android:value</span>=<span class="string">""</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>这里说一下我因为个人编码导致的问题, 我尝试自己来控制广告展示, 加了一个读秒跳过按钮(想强制观看一段时间), 点击跳过设置setState, 但是在 build 方法中又请求了广告, 导致了一个死循环, 最后由于请求次数过多还没有设置自己的设备为测试设备也不是使用的测试ID, 账号被暂停了, 所以大家使用的时候要避免这个问题, 尽量还是将自己的设备添加到测试设备中.</code></p>
+<p>使用的话比较简单(官方的演示代码直接复制也可以用).</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AdPage</span> </span>&#123;</span><br><span class="line">  MobileAdTargetingInfo targetingInfo;</span><br><span class="line"></span><br><span class="line">  InterstitialAd interstitial;</span><br><span class="line"></span><br><span class="line">  BannerAd banner;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">void</span> initAttributes() &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.targetingInfo == <span class="keyword">null</span>) &#123;</span><br><span class="line">      <span class="keyword">this</span>.targetingInfo = MobileAdTargetingInfo(</span><br><span class="line">          keywords: [<span class="string">"some keyword for your app"</span>],</span><br><span class="line">          <span class="comment">// 防止被Google 认为是无效点击和展示.</span></span><br><span class="line">          testDevices: [<span class="string">"Your Phone"</span>, <span class="string">"Simulator"</span>]);</span><br><span class="line"></span><br><span class="line">      <span class="built_in">bool</span> android = Platform.isAndroid;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">this</span>.interstitial = InterstitialAd(</span><br><span class="line">        adUnitId: InterstitialAd.testAdUnitId,</span><br><span class="line">        targetingInfo: <span class="keyword">this</span>.targetingInfo,</span><br><span class="line">        listener: (MobileAdEvent event) &#123;</span><br><span class="line">          <span class="keyword">if</span> (event == MobileAdEvent.closed) &#123;</span><br><span class="line">            <span class="comment">// 点击关闭</span></span><br><span class="line">            <span class="built_in">print</span>(<span class="string">"InterstitialAd Closed"</span>);</span><br><span class="line">            <span class="keyword">this</span>.interstitial.dispose();</span><br><span class="line">            <span class="keyword">this</span>.interstitial = <span class="keyword">null</span>;</span><br><span class="line">          &#125; <span class="keyword">else</span> <span class="keyword">if</span> (event == MobileAdEvent.clicked) &#123;</span><br><span class="line">            <span class="comment">// 关闭</span></span><br><span class="line">            <span class="built_in">print</span>(<span class="string">"InterstitialAd Clicked"</span>);</span><br><span class="line">            <span class="keyword">this</span>.interstitial.dispose();</span><br><span class="line">            <span class="keyword">this</span>.interstitial = <span class="keyword">null</span>;</span><br><span class="line">          &#125; <span class="keyword">else</span> <span class="keyword">if</span> (event == MobileAdEvent.loaded) &#123;</span><br><span class="line">            <span class="comment">// 加载</span></span><br><span class="line">            <span class="built_in">print</span>(<span class="string">"InterstitialAd Loaded"</span>);</span><br><span class="line">          &#125;</span><br><span class="line">          <span class="built_in">print</span>(<span class="string">"InterstitialAd event is <span class="subst">$event</span>"</span>);</span><br><span class="line">        &#125;,</span><br><span class="line">      );</span><br><span class="line"></span><br><span class="line"><span class="comment">//      this.banner = BannerAd(</span></span><br><span class="line"><span class="comment">//          targetingInfo: this.targetingInfo,</span></span><br><span class="line"><span class="comment">//          size: AdSize.smartBanner,</span></span><br><span class="line"><span class="comment">//          listener: (MobileAdEvent event) &#123;</span></span><br><span class="line"><span class="comment">//            if (event == MobileAdEvent.closed) &#123;</span></span><br><span class="line"><span class="comment">//              // 点击关闭</span></span><br><span class="line"><span class="comment">//              print("InterstitialAd Closed");</span></span><br><span class="line"><span class="comment">//              this.interstitial.dispose();</span></span><br><span class="line"><span class="comment">//              this.interstitial = null;</span></span><br><span class="line"><span class="comment">//            &#125; else if (event == MobileAdEvent.clicked) &#123;</span></span><br><span class="line"><span class="comment">//              // 关闭</span></span><br><span class="line"><span class="comment">//              print("InterstitialAd Clicked");</span></span><br><span class="line"><span class="comment">//              this.interstitial.dispose();</span></span><br><span class="line"><span class="comment">//              this.interstitial = null;</span></span><br><span class="line"><span class="comment">//            &#125; else if (event == MobileAdEvent.loaded) &#123;</span></span><br><span class="line"><span class="comment">//              // 加载</span></span><br><span class="line"><span class="comment">//              print("InterstitialAd Loaded");</span></span><br><span class="line"><span class="comment">//            &#125;</span></span><br><span class="line"><span class="comment">//            print("InterstitialAd event is $event");</span></span><br><span class="line"><span class="comment">//          &#125;);</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  <span class="keyword">void</span> show() &#123;</span><br><span class="line">    <span class="comment">// 初始化数据</span></span><br><span class="line">    <span class="keyword">this</span>.initAttributes();</span><br><span class="line">    <span class="comment">// 然后控制跳转</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.interstitial != <span class="keyword">null</span>) &#123;</span><br><span class="line">      <span class="keyword">this</span>.interstitial.load();</span><br><span class="line">      <span class="keyword">this</span>.interstitial.show(</span><br><span class="line">            anchorType: AnchorType.bottom,</span><br><span class="line">            anchorOffset: <span class="number">0.0</span>,</span><br><span class="line">          );</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>项目比较简单, 但是编写的过程中也遇到了许多问题, 慢慢解决的过程也学到了挺多.</p>
+<h4 id="一些资源"><a href="#一些资源" class="headerlink" title="一些资源"></a>一些资源</h4><p><a href="https://github.com/HJMengx/public-apis" target="_blank" rel="noopener">Public APIs</a><br><a href="https://github.com/HJMengx/DogAndCat/" target="_blank" rel="noopener">代码地址</a></p>
+
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2019/06/22/Flutter_scoped_model源码阅读/">scoped_model 源码阅读</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2019/05/30/遗传算法/">遗传算法</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+<div class="comments">
+    <h3 class="title is-4">Comments</h3>
+    <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/default/sdk.js#xfbml=1&version=v2.8";
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<div class="fb-comments" data-width="100%" data-href="http://yoursite.com/2019/06/21/Flutter_完成一个图片APP/" data-num-posts="5"></div>
+
+</div>
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2019 HJMengx&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("default");
+</script>
+
+
+
+<script src="/js/script.js"></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something...">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js"></script>
+    
+</body>
+</html>
